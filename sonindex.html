@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İtalya Vize — Hazırlık Pasaportu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#152238; --ink2:#1e2d47; --paper:#f6f1e7; --paper2:#ece2cf;
+    --muted:#5c6a82; --verde:#2f7d5a; --rosso:#c14231; --gold:#c1994b;
+    --line:rgba(21,34,56,.14);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #22406b 0%, transparent 55%),
+      radial-gradient(900px 500px at 110% 10%, #3a2740 0%, transparent 50%),
+      var(--ink);
+    min-height:100vh;
+    padding:26px 14px 70px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  /* ---------- passport cover ---------- */
+  .cover{
+    position:relative;border:1px solid rgba(193,153,75,.55);border-radius:16px;
+    padding:22px 22px 18px;background:linear-gradient(160deg,#1b2c49,#16233a);
+    box-shadow:0 20px 50px -24px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06);
+    overflow:hidden;color:var(--paper);
+  }
+  .cover::after{content:"";position:absolute;inset:0;opacity:.10;pointer-events:none;
+    background:repeating-radial-gradient(circle at 50% 120%, transparent 0 14px, rgba(246,241,231,.5) 14px 15px);}
+  .cover .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+  .cover h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(26px,5vw,38px);margin:8px 0 4px;line-height:1.05}
+  .cover .sub{color:#b9c4d8;font-size:14px;max-width:52ch}
+  .disclaimer{margin-top:12px;font-size:11.5px;line-height:1.5;color:#9aa8c2;border:1px dashed rgba(193,153,75,.4);border-radius:8px;padding:8px 10px}
+  .disclaimer a{color:var(--gold)}
+  .tricolore{display:flex;height:4px;border-radius:2px;overflow:hidden;margin-top:16px}
+  .tricolore span{flex:1}
+  .tricolore .v{background:var(--verde)} .tricolore .b{background:var(--paper)} .tricolore .r{background:var(--rosso)}
+
+  /* ---------- profile switch ---------- */
+  .profiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 6px}
+  @media(max-width:560px){.profiles{grid-template-columns:1fr}}
+  .pcard{
+    position:relative;text-align:left;cursor:pointer;border:1.5px dashed var(--line);
+    border-radius:14px;background:var(--paper);padding:14px 16px 12px;font-family:inherit;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .pcard:hover{transform:translateY(-2px)}
+  .pcard:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .pcard .klass{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+  .pcard .pname{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:4px 0 2px}
+  .pcard .pdesc{font-size:12.5px;color:var(--muted);line-height:1.45}
+  .pcard .ppct{position:absolute;top:12px;right:14px;font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)}
+  .pcard[aria-pressed="true"]{border:1.5px solid var(--verde);box-shadow:0 10px 26px -14px rgba(0,0,0,.55)}
+  .pcard[aria-pressed="true"] .ppct{color:var(--verde);font-weight:700}
+  .pcard[aria-pressed="true"]::before{
+    content:"SEÇİLİ";position:absolute;bottom:10px;right:12px;font-family:'Space Mono',monospace;
+    font-size:9px;letter-spacing:.2em;color:var(--verde);border:1px solid var(--verde);
+    border-radius:999px;padding:2px 8px;transform:rotate(-4deg);
+  }
+
+  /* ---------- progress strip (boarding pass) ---------- */
+  .strip{
+    display:flex;align-items:center;gap:14px;background:var(--paper);border-radius:14px;
+    padding:14px 18px;margin:12px 0 22px;box-shadow:0 14px 34px -18px rgba(0,0,0,.6);
+  }
+  .strip .route{font-family:'Space Mono',monospace;font-weight:700;font-size:15px;white-space:nowrap}
+  .strip .route small{display:block;font-weight:400;font-size:10px;letter-spacing:.18em;color:var(--muted)}
+  .bar{flex:1;height:28px;position:relative;overflow:visible}
+  .bar::before{content:"";position:absolute;top:50%;left:0;right:0;border-top:2px dashed rgba(21,34,56,.28)}
+  .bar::after{content:"";position:absolute;top:50%;right:-2px;width:8px;height:8px;translate:0 -50%;border-radius:50%;border:2px solid var(--rosso);background:var(--paper)}
+  .bar i{position:absolute;top:50%;left:0;height:4px;translate:0 -50%;width:0%;border-radius:2px;background:linear-gradient(90deg,var(--verde),#3f9a72);transition:width .4s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 8px rgba(47,125,90,.5)}
+  .plane{position:absolute;top:50%;translate:0 -50%;left:0;font-size:19px;transition:left .4s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));animation:hover 2.2s ease-in-out infinite}
+  @keyframes hover{0%,100%{margin-top:0}50%{margin-top:-3px}}
+  .pct{font-family:'Space Mono',monospace;font-weight:700;min-width:3.2em;text-align:right}
+
+  /* ---------- categories ---------- */
+  .cat{background:var(--paper);border-radius:14px;margin-bottom:16px;overflow:hidden;box-shadow:0 14px 34px -20px rgba(0,0,0,.55)}
+  .cat header{display:flex;align-items:center;gap:10px;padding:14px 18px 12px;border-bottom:1px dashed var(--line);position:relative}
+  .cat header .ico{font-size:18px}
+  .cat header h2{font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin:0;flex:1}
+  .cat header .count{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted)}
+  .stamp{
+    position:absolute;right:14px;top:6px;font-family:'Space Mono',monospace;font-size:9px;
+    letter-spacing:.14em;color:var(--verde);border:2px solid var(--verde);border-radius:8px;
+    padding:4px 8px;transform:rotate(8deg) scale(0);opacity:.85;transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+    text-transform:uppercase;pointer-events:none;background:rgba(47,125,90,.06);
+  }
+  .cat.done .stamp{transform:rotate(-7deg) scale(1)}
+  .cat.done header .count{color:var(--verde)}
+  ul.items{list-style:none;margin:0;padding:6px 8px}
+  .item{display:flex;align-items:flex-start;gap:12px;padding:10px 10px;border-radius:10px;cursor:pointer;transition:background .12s}
+  .item:hover{background:rgba(21,34,56,.045)}
+  .box{
+    flex:none;width:22px;height:22px;margin-top:1px;border:2px solid var(--muted);border-radius:6px;
+    display:grid;place-items:center;font-size:13px;color:transparent;transition:all .15s;background:#fff;
+  }
+  .item input{position:absolute;opacity:0;pointer-events:none}
+  .item input:focus-visible + .box{outline:3px solid var(--gold);outline-offset:2px}
+  .item.on .box{background:var(--verde);border-color:var(--verde);color:#fff}
+  .item .txt{font-size:14px;line-height:1.5}
+  .item .txt b{font-weight:600}
+  .item .txt small{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+  .item.on .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(47,125,90,.5);text-decoration-thickness:1.5px}
+  .item.on .txt small{text-decoration:none}
+
+  /* ---------- celebration ---------- */
+  .visa{
+    display:none;background:var(--paper);border-radius:14px;padding:26px 22px;text-align:center;
+    border:2px solid var(--verde);box-shadow:0 14px 34px -20px rgba(0,0,0,.55);
+  }
+  .visa.show{display:block;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .visa h3{font-family:'Fraunces',serif;font-weight:900;font-size:26px;margin:0 0 6px;color:var(--verde)}
+  .visa p{margin:0;color:var(--muted);font-size:14px}
+  .visa .big{font-size:40px;margin-bottom:6px}
+
+  .foot{color:#8fa0bd;font-size:11.5px;text-align:center;margin-top:24px;font-family:'Space Mono',monospace}
+  /* ---------- pop-up katmanı ---------- */
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);
+    background:var(--ink);color:var(--paper);border:1px solid rgba(193,153,75,.6);
+    padding:10px 20px;border-radius:999px;font-family:'Space Mono',monospace;font-size:13px;
+    opacity:0;pointer-events:none;transition:opacity .22s, transform .22s;z-index:60;
+    box-shadow:0 12px 30px rgba(0,0,0,.45);white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .stampOverlay{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:70}
+  .bigStamp{
+    font-family:'Space Mono',monospace;font-weight:700;color:var(--rosso);
+    border:6px double var(--rosso);border-radius:14px;padding:16px 28px;
+    font-size:clamp(18px,5vw,32px);letter-spacing:.1em;text-transform:uppercase;text-align:center;
+    background:rgba(246,241,231,.94);opacity:0;transform:rotate(-12deg) scale(3);
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+  }
+  .bigStamp small{display:block;font-size:11px;letter-spacing:.28em;color:var(--muted);margin-top:4px}
+  .bigStamp.slam{animation:slam .75s cubic-bezier(.2,.9,.3,1.1) forwards}
+  @keyframes slam{
+    0%{transform:rotate(-12deg) scale(3);opacity:0}
+    45%{transform:rotate(-8deg) scale(.95);opacity:1}
+    62%{transform:rotate(-8deg) scale(1.05)}
+    100%{transform:rotate(-8deg) scale(1);opacity:1}
+  }
+  .bigStamp.fade{transition:opacity .4s;opacity:0}
+  .confetti{position:fixed;top:-14px;width:9px;height:14px;z-index:65;pointer-events:none;animation:fall linear forwards;border-radius:2px}
+  @keyframes fall{to{transform:translateY(112vh) rotate(760deg)}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.confetti{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="cover">
+    <div class="eyebrow">Repubblica Italiana · Schengen C</div>
+    <h1>İtalya Vize — Hazırlık Pasaportu</h1>
+    <div class="sub">Profilini seç, belgeleri topladıkça damgala. İlerlemen bu cihazda saklanır — kapat, aç, kaldığın yerden devam et.</div>
+    <div class="disclaimer">⚠️ Gayriresmî, kişisel hazırlık listesidir — iDATA, İtalya Büyükelçiliği veya herhangi bir resmî kurumla ilgisi yoktur. Güncel ve bağlayıcı evrak listesi için tek geçerli kaynak <a href="https://www.idata.com.tr" target="_blank" rel="noopener">idata.com.tr</a>'dir.</div>
+    <div class="tricolore"><span class="v"></span><span class="b"></span><span class="r"></span></div>
+  </div>
+
+  <div class="profiles" id="profiles"></div>
+
+  <div class="strip">
+    <div class="route">ANK ✈ FCO<small id="profLabel">PROFİL</small></div>
+    <div class="bar"><i id="fill"></i><span class="plane" id="plane">✈️</span></div>
+    <div class="pct" id="pct">0%</div>
+  </div>
+
+  <div id="cats"></div>
+
+  <div class="visa" id="visa">
+    <div class="big">🛬</div>
+    <h3>DOSYA TAMAM — VISTO PRONTO</h3>
+    <p>Her belge yerli yerinde. Randevuda tek işin gülümsemek. In bocca al lupo! 🇮🇹</p>
+  </div>
+
+  <div class="foot">gayriresmî hazırlık listesi · resmî kaynak: idata.com.tr — buon viaggio</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const PROFILES = {
+  calisan: {label:"Çalışan (4a / SGK'lı)", klass:"Economy · Maaşlı", desc:"İşveren yazısı, bordro ve maaş hesabıyla başvuranlar için."},
+  isveren: {label:"Şirket Ortağı / İşveren", klass:"Business · Kendi işi", desc:"Huzur hakkı, kira geliri, şirket belgeleriyle başvuranlar için."}
+};
+
+const COMMON_TOP = [
+  {ico:"🛂", title:"Temel Belgeler", items:[
+    ["Başvuru formu","doldurulmuş, yer-tarih yazılmış ve imzalanmış"],
+    ["Pasaport","dönüşten sonra en az 3 ay geçerli, 10 yıldan eski değil, en az 2 boş sayfa"],
+    ["Pasaportun işlem görmüş TÜM sayfalarının fotokopisi","kimlik bilgileri sayfası + vize, damga, mühür içeren her sayfa (boş sayfalar hariç) — varsa eski pasaporttaki vizeler de"],
+    ["2 adet biyometrik fotoğraf","son 6 ay içinde çekilmiş, beyaz fon, 35×45 mm"],
+    ["Nüfus cüzdanı fotokopisi","ön-arka tek sayfada"]
+  ]},
+  {ico:"✈️", title:"Seyahat Belgeleri", items:[
+    ["Gidiş-dönüş uçak rezervasyonu","isim pasaporttakiyle birebir aynı olmalı"],
+    ["Otel rezervasyonu","tüm geceleri kapsamalı, isim ve tarihler tutmalı"],
+    ["Gün gün seyahat planı (itinerary)","tarihler uçuş ve otelle çelişmemeli"],
+    ["Niyet mektubu (letter of intent)","imzalı — itinerary ile aynı hikayeyi anlatmalı"],
+    ["Seyahat sağlık sigortası","min. 30.000 €, tüm Schengen — gidişten 1 gün önce/dönüşten 1 gün sonrayı da kapsamalı, teminat € cinsinden, tercihen İngilizce"]
+  ]},
+  {ico:"🪪", title:"e-Devlet — Tek Oturuşta Çek", items:[
+    ["Tarihçeli yerleşim yeri belgesi","barkodlu"],
+    ["Tam vukuatlı nüfus kayıt örneği","barkodlu"],
+    ["SGK Tescil ve Hizmet Dökümü","barkodlu — 4A dökümü"],
+    ["Yurtdışı giriş-çıkış belgesi","opsiyonel ama seyahat geçmişini güzel özetler"],
+    ["Eğitim / mezuniyet belgesi","OPSİYONEL — Claude notu: turistik vizede istenmiyor, dosyaya katkısı yok; yine de koymak istersen e-Devlet YÖK Mezun Belgesi barkodlu iner"]
+  ]}
+];
+
+const INCOME = {
+  isveren: {ico:"💼", title:"Gelir & Şirket Belgeleri", items:[
+    ["Ticaret sicil gazetesi","ortaklığı gösteren güncel nüsha"],
+    ["Vergi levhası","GİB / e-Devlet üzerinden"],
+    ["Faaliyet belgesi","bağlı olunan odadan, son 3 ay içinde alınmış"],
+    ["Şirket banka hesap dökümleri","son 3 ay, kaşeli-imzalı veya e-imzalı"],
+    ["Huzur hakkı belgeleri","genel kurul kararı + bordro + muhtasar"],
+    ["Kişisel banka dökümleri","son 3-6 ay — döviz ve altın hesapları dahil, bakiye yeterli"],
+    ["Tapular + kira kontratları","kira gelirini belgeleyen set"],
+    ["Gelir vergisi beyannamesi","muhasebeciden PDF + tahakkuk fişi"],
+    ["Araç ruhsatı","dönüş bağı olarak dosyaya ek"],
+    ["İmza sirküleri","Ankara başvurularında MUAF — sadece not olarak burada"]
+  ]},
+  calisan: {ico:"💼", title:"Gelir & İş Belgeleri", items:[
+    ["İşveren izin yazısı","antetli kağıt: pozisyon, maaş, izin tarihleri, işe dönüş güvencesi — kaşeli ve imzalı"],
+    ["Son 3 ay maaş bordrosu","kaşeli ve imzalı"],
+    ["SGK işe giriş bildirgesi","işverenden veya e-Devlet — işe yeni girildiyse durumu açıklayan kısa şahsi dilekçe ekle"],
+    ["İşverenin vergi levhası fotokopisi","şirketten istenecek"],
+    ["İşverenin faaliyet belgesi / sicil gazetesi","şirketten fotokopi yeterli"],
+    ["Maaş hesabı banka dökümü","son 3-6 ay, maaş yatışları görünmeli, kaşeli-imzalı veya e-imzalı"],
+    ["Varsa ek gelir belgeleri","tapu, araç ruhsatı, kira kontratı — dosyayı güçlendirir"]
+  ]}
+};
+
+const COMMON_BOTTOM = [
+  {ico:"🗓️", title:"Randevu Günü", items:[
+    ["iDATA randevusu","randevu çıktısı yanında"],
+    ["Vize harcı: 4.860 TL — NAKİT","kart geçmiyor — tutar değişebilir, randevudan önce iDATA sitesinden teyit et"],
+    ["iDATA hizmet bedeli: 2.110 TL","randevu alınırken online ödeniyor (kartla) — randevu günü ayrıca ödeme yok"],
+    ["Pasaport kargo: 654 TL (opsiyonel)","ofise tekrar gitmek istemezsen pasaport adresine kargoyla gelir — istemezsen SMS sonrası elden alırsın"],
+    ["Belgeler A4, zımbasız, kategorilere göre sıralı","memurun işini kolaylaştıran dosya, hızlı dosya"],
+    ["Parmak izi","ilk Schengen başvurusuysa veya son verişin üstünden 59 ay geçtiyse alınacak"]
+  ]}
+];
+
+/* ---------- storage adapter: Claude artifact → tarayıcı → bellek ---------- */
+const mem = {};
+const KEY = "vize_checklist_v3";
+async function sGet(){
+  if (window.storage && window.storage.get){
+    try{ const r = await window.storage.get(KEY); return r ? JSON.parse(r.value) : null; }catch(e){ return null; }
+  }
+  try{ const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; }catch(e){ return mem[KEY] || null; }
+}
+async function sSet(state){
+  const s = JSON.stringify(state);
+  if (window.storage && window.storage.set){
+    try{ await window.storage.set(KEY, s); return; }catch(e){}
+  }
+  try{ localStorage.setItem(KEY, s); }catch(e){ mem[KEY] = state; }
+}
+
+/* ---------- state ---------- */
+let state = { profile:"calisan", checks:{ isveren:{}, calisan:{} } };
+
+function catsFor(p){ return [...COMMON_TOP, INCOME[p], ...COMMON_BOTTOM]; }
+function idOf(catIdx,itemIdx){ return "c"+catIdx+"i"+itemIdx; }
+
+/* ---------- kutlama katmanı ---------- */
+const CHEERS = ["Perfetto! \ud83e\udd0c","Bravo! \ud83d\udc4f","Andiamo! \u2708\ufe0f","Bellissimo! \ud83c\uddee\ud83c\uddf9","Molto bene! \u2714\ufe0f","Roma yakla\u015f\u0131yor... \ud83c\udfdb\ufe0f","Bir belge daha, che bello! \ud83d\udcc4","Dosya g\u00fczelle\u015fiyor \ud83d\ude0e","Eccellente! \u2b50","Espresso molas\u0131 hak ettin \u2615","Mamma mia, ne h\u0131z! \ud83d\udd25","Memur bu dosyay\u0131 sevecek \ud83d\uddc2\ufe0f"];
+let toastTimer;
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 1600);
+}
+function bigStamp(title){
+  const ov = document.createElement("div"); ov.className = "stampOverlay";
+  ov.innerHTML = `<div class="bigStamp slam">\u2714 ${title}<small>TIMBRO \u00b7 TAMAMLANDI</small></div>`;
+  document.body.appendChild(ov);
+  setTimeout(()=>ov.firstChild.classList.add("fade"), 1300);
+  setTimeout(()=>ov.remove(), 1800);
+}
+const CONF_COLORS = ["#2f7d5a","#c14231","#c1994b","#f6f1e7","#22406b"];
+function confetti(){
+  for(let i=0;i<90;i++){
+    const c = document.createElement("i"); c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = CONF_COLORS[i%CONF_COLORS.length];
+    c.style.animationDuration = (2.4+Math.random()*1.8)+"s";
+    c.style.animationDelay = (Math.random()*0.5)+"s";
+    c.style.transform = "rotate("+Math.random()*360+"deg)";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5200);
+  }
+}
+
+/* ---------- render ---------- */
+const $ = s => document.querySelector(s);
+
+function renderProfiles(){
+  const host = $("#profiles"); host.innerHTML = "";
+  for (const key of Object.keys(PROFILES)){
+    const p = PROFILES[key];
+    const total = catsFor(key).reduce((a,c)=>a+c.items.length,0);
+    const done = Object.values(state.checks[key]||{}).filter(Boolean).length;
+    const btn = document.createElement("button");
+    btn.className = "pcard"; btn.type = "button";
+    btn.setAttribute("aria-pressed", state.profile===key ? "true":"false");
+    btn.innerHTML = `<span class="ppct">${Math.round(done/total*100)||0}%</span>
+      <div class="klass">${p.klass}</div>
+      <div class="pname">${p.label}</div>
+      <div class="pdesc">${p.desc}</div>`;
+    btn.addEventListener("click", ()=>{ state.profile = key; sSet(state); renderAll(); });
+    host.appendChild(btn);
+  }
+}
+
+function renderCats(){
+  const host = $("#cats"); host.innerHTML = "";
+  const cats = catsFor(state.profile);
+  const checks = state.checks[state.profile];
+  cats.forEach((cat,ci)=>{
+    const sec = document.createElement("section");
+    const doneCount = cat.items.filter((_,ii)=>checks[idOf(ci,ii)]).length;
+    sec.className = "cat" + (doneCount===cat.items.length ? " done":"");
+    sec.innerHTML = `<header><span class="ico">${cat.ico}</span><h2>${cat.title}</h2>
+      <span class="count">${doneCount}/${cat.items.length}</span><span class="stamp">✔ TAMAM</span></header>`;
+    const ul = document.createElement("ul"); ul.className="items";
+    cat.items.forEach((it,ii)=>{
+      const id = idOf(ci,ii);
+      const li = document.createElement("li");
+      li.className = "item" + (checks[id] ? " on":"");
+      li.innerHTML = `<input type="checkbox" id="${id}" ${checks[id]?"checked":""}>
+        <span class="box">✓</span>
+        <label class="txt" for="${id}"><b>${it[0]}</b><small>${it[1]}</small></label>`;
+      li.addEventListener("click", (e)=>{
+        e.preventDefault();
+        checks[id] = !checks[id];
+        if (checks[id]){
+          const catDone = cat.items.every((_,k)=>checks[idOf(ci,k)]);
+          const total = cats.reduce((a,c)=>a+c.items.length,0);
+          const done = cats.reduce((a,c,cj)=>a+c.items.filter((_,k)=>checks[idOf(cj,k)]).length,0);
+          if (done===total){ bigStamp("VISTO PRONTO"); confetti(); }
+          else if (catDone){ bigStamp(cat.title); }
+          else { toast(CHEERS[Math.floor(Math.random()*CHEERS.length)]); }
+        }
+        sSet(state); renderAll();
+      });
+      ul.appendChild(li);
+    });
+    sec.appendChild(ul);
+    host.appendChild(sec);
+  });
+}
+
+function renderProgress(){
+  const cats = catsFor(state.profile);
+  const checks = state.checks[state.profile];
+  const total = cats.reduce((a,c)=>a+c.items.length,0);
+  let done = 0;
+  cats.forEach((c,ci)=>c.items.forEach((_,ii)=>{ if(checks[idOf(ci,ii)]) done++; }));
+  const pct = Math.round(done/total*100);
+  $("#fill").style.width = pct+"%";
+  $("#plane").style.left = "calc("+pct+"% - 8px)";
+  $("#pct").textContent = pct+"%";
+  $("#profLabel").textContent = PROFILES[state.profile].label.toUpperCase();
+  $("#visa").classList.toggle("show", pct===100);
+}
+
+function renderAll(){ renderProfiles(); renderCats(); renderProgress(); }
+
+(async function init(){
+  const saved = await sGet();
+  if (saved && saved.checks) state = saved;
+  renderAll();
+})();
+</script>
+</body>
+</html>
